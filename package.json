@@ -13,6 +13,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "mdb-vue-ui-kit": "^4.1.1",
     "vue": "^3.4.21"
   },
   "devDependencies": {

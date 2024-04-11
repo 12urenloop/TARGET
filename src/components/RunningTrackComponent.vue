@@ -21,6 +21,7 @@ interface Team {
   progress: number;
   speed: number;
   timestamp: number;
+  show: boolean;
 }
 
 export default defineComponent({
@@ -95,12 +96,14 @@ export default defineComponent({
       if (teamCircle) {
         teamCircle.setAttribute('cx', point.x.toString());
         teamCircle.setAttribute('cy', point.y.toString());
+        teamCircle.style.display = team.show ? 'block' : 'none';
       } else {
         const svg = document.querySelector('svg') as SVGSVGElement;
         const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
         circle.id = `team-${team.team_id}`;
         circle.setAttribute('cx', point.x.toString());
         circle.setAttribute('cy', point.y.toString());
+        circle.style.display = team.show ? 'block' : 'none';
         circle.setAttribute('r', '20');
         circle.setAttribute('fill', this.teamIdToColor(team.team_id));
         svg.appendChild(circle);
