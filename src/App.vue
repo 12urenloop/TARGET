@@ -1,6 +1,6 @@
 <template>
   <main>
-    <TargetComponent />
+    <TargetComponent configuration="12urenloop-empty" />
   </main>
 </template>
 
