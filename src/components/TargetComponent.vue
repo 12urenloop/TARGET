@@ -1,0 +1,182 @@
+<template>
+  <div class="img-overlay-wrap">
+    <img src="/tracks/12urenloop-empty.jpg" alt="12urenloop parcours Gent Sint-Pietersplein" />
+    <svg viewBox="0 0 4032 2268" xmlns="http://www.w3.org/2000/svg">
+      <path id="path" :d="path" fill="none" stroke="black" stroke-width="5" stroke-linejoin="round" />
+
+      <!-- Points -->
+      <template v-if="showPoints" v-for="point of points">
+        <circle :cx="point.x" :cy="point.y" r="10" fill="red" />
+      </template>
+    </svg>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+// Team type
+interface Team {
+  team_id: number;
+  progress: number;
+  speed: number;
+  timestamp: number;
+}
+
+export default defineComponent({
+  name: 'TargetComponent',
+  data() {
+    return {
+      showPoints: false,
+      points: [
+        { x: 3200, y: 1000 },
+        { x: 3200, y: 920 },
+        { x: 3070, y: 850 },
+        { x: 2900, y: 800 },
+        { x: 2500, y: 800 },
+        { x: 1500, y: 800 },
+        { x: 1100, y: 800 },
+        { x: 900, y: 870 },
+        { x: 825, y: 1000 },
+        { x: 825, y: 1300 },
+        { x: 830, y: 1450 },
+        { x: 870, y: 1580 },
+        { x: 1000, y: 1650 },
+        { x: 1500, y: 1650 },
+        { x: 2500, y: 1650 },
+        { x: 2900, y: 1650 },
+        { x: 3070, y: 1600 },
+        { x: 3180, y: 1500 },
+        { x: 3200, y: 1300 },
+        { x: 3200, y: 1000 }
+      ],
+      teams: [
+        {
+          team_id: 1,
+          progress: 0.5,
+          speed: 0.02,
+          timestamp: new Date().getTime()
+        },
+        {
+          team_id: 2,
+          progress: 0.7,
+          speed: 0.05,
+          timestamp: new Date().getTime()
+        },
+        {
+          team_id: 3,
+          progress: 0.3,
+          speed: 0.03,
+          timestamp: new Date().getTime()
+        },
+      ]
+    }
+  },
+  computed: {
+    path() {
+      const points = this.points
+      // Start building the path string
+      let pathString = 'M' + points[0].x + ',' + points[0].y
+
+      // Apply smoothing to the path
+      for (let i = 1; i < points.length - 1; i++) {
+        const x0 = i === 1 ? points[0].x : points[i - 1].x
+        const y0 = i === 1 ? points[0].y : points[i - 1].y
+        const x1 = points[i].x
+        const y1 = points[i].y
+        const x2 = points[i + 1].x
+        const y2 = points[i + 1].y
+
+        const cp1x = x1 + (x2 - x0) / 4
+        const cp1y = y1 + (y2 - y0) / 4
+        const cp2x = x2 - (x2 - x1) / 4
+        const cp2y = y2 - (y2 - y1) / 4
+
+        pathString += 'C' + cp1x + ',' + cp1y + ' ' + cp2x + ',' + cp2y + ' ' + x2 + ',' + y2
+      }
+
+      return pathString
+    }
+  },
+  mounted() {
+    this.updateTeams();
+  },
+  methods: {
+    updateTeams() {
+      const now = new Date().getTime()
+      this.teams.forEach(team => {
+        // Progress is in percentage of the path
+        // Speed is in percentage of the path per second
+        team.progress += team.speed * (now - team.timestamp) / 1000
+        team.timestamp = now
+
+        // If the team is at the end of the path, reset it to the start
+        team.progress = team.progress % 1
+
+        this.drawTeam(team)
+      })
+
+      // Now update the teams every frame.
+      requestAnimationFrame(this.updateTeams)
+    },
+    drawTeam(team: Team) {
+      // Calculate the point on the path
+      const path = document.getElementById('path') as unknown as SVGGeometryElement
+      const length = path.getTotalLength()
+      const point = path.getPointAtLength(length * team.progress)
+
+      // Draw the team on the SVG
+      // If the team is already drawn, update its position
+      const teamCircle = document.getElementById(`team-${team.team_id}`) as unknown as SVGCircleElement
+      if (teamCircle) {
+        teamCircle.setAttribute('cx', point.x.toString())
+        teamCircle.setAttribute('cy', point.y.toString())
+      } else {
+        const svg = document.querySelector('svg') as SVGSVGElement
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
+        circle.id = `team-${team.team_id}`
+        circle.setAttribute('cx', point.x.toString())
+        circle.setAttribute('cy', point.y.toString())
+        circle.setAttribute('r', '20')
+        circle.setAttribute('fill', this.teamIdToColor(team.team_id))
+        svg.appendChild(circle)
+      }
+    },
+    teamIdToColor(team_id: number): string {
+      const colors: any = {
+        1: '#ff0000',
+        2: '#00ff00',
+        3: '#0000ff',
+        4: '#ffff00',
+        5: '#ff00ff',
+        6: '#00ffff',
+        7: '#ff8000',
+        8: '#ff0080',
+        9: '#80ff00'
+      }
+      return colors[team_id] || '#000000'
+    }
+  }
+})
+</script>
+
+
+<style scoped>
+.img-overlay-wrap {
+  position: relative;
+  display: inline-block; /* <= shrinks container to image size */
+  transition: transform 150ms ease-in-out;
+}
+
+.img-overlay-wrap img { /* <= optional, for responsiveness */
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.img-overlay-wrap svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+</style>
