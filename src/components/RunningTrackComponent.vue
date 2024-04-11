@@ -14,15 +14,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-
-// Team type
-interface Team {
-  team_id: number;
-  progress: number;
-  speed: number;
-  timestamp: number;
-  show: boolean;
-}
+import type { Team } from '@/assets/team';
 
 export default defineComponent({
   name: 'RunningTrackComponent',
@@ -92,21 +84,21 @@ export default defineComponent({
 
       // Draw the team on the SVG
       // If the team is already drawn, update its position
-      const teamCircle = document.getElementById(`team-${team.team_id}`) as unknown as SVGCircleElement;
-      if (teamCircle) {
-        teamCircle.setAttribute('cx', point.x.toString());
-        teamCircle.setAttribute('cy', point.y.toString());
-        teamCircle.style.display = team.show ? 'block' : 'none';
+      const teamImage = document.getElementById(`team-${team.team_id}`) as unknown as SVGImageElement;
+      if (teamImage) {
+        teamImage.setAttribute('x', (point.x - 50).toString());
+        teamImage.setAttribute('y', (point.y - 50).toString());
+        teamImage.style.display = team.show ? 'block' : 'none';
       } else {
         const svg = document.querySelector('svg') as SVGSVGElement;
-        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        circle.id = `team-${team.team_id}`;
-        circle.setAttribute('cx', point.x.toString());
-        circle.setAttribute('cy', point.y.toString());
-        circle.style.display = team.show ? 'block' : 'none';
-        circle.setAttribute('r', '20');
-        circle.setAttribute('fill', this.teamIdToColor(team.team_id));
-        svg.appendChild(circle);
+        const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+        image.id = `team-${team.team_id}`;
+        image.setAttribute('x', (point.x - 50).toString()); // Adjust x and y position according to image size
+        image.setAttribute('y', (point.y - 50).toString());
+        image.setAttribute('width', '100'); // Set the width and height of the image
+        image.style.display = team.show ? 'block' : 'none';
+        image.setAttribute('href', `/teams/${team.team_name.trim().toLowerCase()}.png`);
+        svg.appendChild(image);
       }
     },
     teamIdToColor(team_id: number): string {

@@ -33,17 +33,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { MDBCheckbox, MDBTable } from 'mdb-vue-ui-kit';
-
-// Team type
-interface Team {
-  team_id: number;
-  team_name: string;
-  rounds: number;
-  progress: number;
-  speed: number;
-  timestamp: number;
-  show: boolean;
-}
+import type { Team } from '@/assets/team';
 
 export default defineComponent({
   name: 'LeaderboardComponent',
