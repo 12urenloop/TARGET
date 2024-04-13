@@ -1,5 +1,6 @@
 {
   "img": "/tracks/12urenloop-empty.jpg",
+  "wsEndpoint": "wss://loxsi.12urenloop.be/feed",
   "colors": {
     "1": "#ff0000",
     "2": "#00ff00",
