@@ -1,17 +1,6 @@
 {
   "img": "/tracks/12urenloop-empty.jpg",
   "wsEndpoint": "wss://loxsi.12urenloop.be/feed",
-  "colors": {
-    "1": "#ff0000",
-    "2": "#00ff00",
-    "3": "#0000ff",
-    "4": "#ffff00",
-    "5": "#ff00ff",
-    "6": "#00ffff",
-    "7": "#ff8000",
-    "8": "#ff0080",
-    "9": "#80ff00"
-  },
   "points": [
     {
       "x": 3200,

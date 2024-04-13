@@ -2,7 +2,6 @@
   <RunningTrackComponent
     v-if="mounted"
     :points="points"
-    :colors="colors"
     :teams="teams"
     :img="img"
   />
@@ -31,7 +30,6 @@ export default defineComponent({
       points: [
         { x: 0, y: 0 },
       ],
-      colors: {} as any,
       wsEndpoint: '',
       message: '',
       teams: [
@@ -77,7 +75,6 @@ export default defineComponent({
       console.log(config);
       this.img = config.img;
       this.points = config.points;
-      this.colors = config.colors;
       this.wsEndpoint = config.wsEndpoint;
     },
     async connectWebSocket(timeout = 0) {

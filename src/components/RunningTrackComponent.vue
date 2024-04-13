@@ -20,7 +20,6 @@ export default defineComponent({
   name: 'RunningTrackComponent',
   props: {
     points: Array<{ x: number, y: number }>,
-    colors: {} as any,
     teams: Array<Team>,
     img: String,
   },
@@ -100,9 +99,6 @@ export default defineComponent({
         image.setAttribute('href', `/teams/${team.team_name.split('-')[0].trim().toLowerCase()}.png`);
         svg.appendChild(image);
       }
-    },
-    teamIdToColor(team_id: number): string {
-      return this.colors[team_id] || '#000000';
     },
   },
 });
