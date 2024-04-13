@@ -6,6 +6,7 @@
     :teams="teams"
     :img="img"
   />
+  <MessageComponent :message="message" />
   <LeaderboardComponent :teams="teams" class="mt-3 mb-3" />
 </template>
 
@@ -14,10 +15,11 @@ import { defineComponent } from 'vue';
 import RunningTrackComponent from '@/components/RunningTrackComponent.vue';
 import LeaderboardComponent from '@/components/LeaderboardComponent.vue';
 import { type Count, type Position, type SocketMsg, socketMsgHandler } from '@/assets/loxsi';
+import MessageComponent from '@/components/MessageComponent.vue';
 
 export default defineComponent({
   name: 'TargetComponent',
-  components: { LeaderboardComponent, RunningTrackComponent },
+  components: { MessageComponent, LeaderboardComponent, RunningTrackComponent },
   props: [
     'configuration',
   ],
@@ -31,6 +33,7 @@ export default defineComponent({
       ],
       colors: {} as any,
       wsEndpoint: '',
+      message: '',
       teams: [
         {
           team_id: 1,
@@ -156,7 +159,7 @@ export default defineComponent({
     },
     handleNewMessage(message: string) {
       console.log(message);
-      console.error('message not implemented yet');
+      this.message = message;
     },
   },
 });
