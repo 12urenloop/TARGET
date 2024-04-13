@@ -1,12 +1,12 @@
 <template>
   <div class="container">
-    <MDBTable hover responsive>
+    <MDBTable hover responsive align="middle">
       <thead class="bg-light">
       <tr>
         <th>#</th>
         <th />
         <th>Team</th>
-        <th>Rounds</th>
+        <th style="width: 75%">Rounds</th>
         <th>Visible</th>
       </tr>
       </thead>
@@ -14,13 +14,17 @@
       <tr v-for="(team, index) in sorted(teams ?? [])" :key="team.team_id">
         <td>{{ index + 1 }}</td>
         <td>
-          <img
-            :src="`/teams/${team.team_name.trim().toLowerCase()}.png`"
-            :alt="`Team ${team.team_name}`"
+          <img v-for="team_name in team.team_name.split('-')"
+            :src="`/teams/${team_name.trim().toLowerCase()}.png`"
+            :alt="`Logo ${team_name}`"
           />
         </td>
         <td>{{ team.team_name }}</td>
-        <td>{{ team.rounds }}</td>
+        <td>
+          <MDBProgress :height="20">
+            <MDBProgressBar :value="team.rounds" :min="0" :max="maxRounds"><b>{{ team.rounds }}</b></MDBProgressBar>
+          </MDBProgress>
+        </td>
         <td>
           <MDBCheckbox v-model="team.show" />
         </td>
@@ -32,14 +36,19 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { MDBCheckbox, MDBTable } from 'mdb-vue-ui-kit';
+import { MDBCheckbox, MDBProgress, MDBProgressBar, MDBTable } from 'mdb-vue-ui-kit';
 import type { Team } from '@/assets/team';
 
 export default defineComponent({
   name: 'LeaderboardComponent',
-  components: { MDBTable, MDBCheckbox },
+  components: { MDBTable, MDBCheckbox, MDBProgress, MDBProgressBar },
   props: {
     teams: Array<Team>,
+  },
+  computed: {
+    maxRounds() {
+      return Math.max(...this.teams?.map(team => team.rounds) ?? [1]);
+    },
   },
   methods: {
     sorted(teams: Array<Team>) {
@@ -52,5 +61,22 @@ export default defineComponent({
 <style scoped>
 img {
   height: 30px;
+}
+.progress-bar {
+  background-color: #fc0;
+  color: #2c2ca0;
+}
+</style>
+<style>
+.form-check-input[type=checkbox]:checked {
+  background-color: #2c2ca0;
+  border-color: #2c2ca0;
+}
+.form-check-input:checked {
+  background-color: #2c2ca0;
+  border-color: #2c2ca0;
+}
+.form-check-input:focus {
+  background-color: #2c2ca0 !important;
 }
 </style>
