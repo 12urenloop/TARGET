@@ -97,7 +97,7 @@ export default defineComponent({
         image.setAttribute('y', (point.y - 50).toString());
         image.setAttribute('width', '100'); // Set the width and height of the image
         image.style.display = team.show ? 'block' : 'none';
-        image.setAttribute('href', `/teams/${team.team_name.trim().toLowerCase()}.png`);
+        image.setAttribute('href', `/teams/${team.team_name.split('-')[0].trim().toLowerCase()}.png`);
         svg.appendChild(image);
       }
     },

@@ -55,7 +55,7 @@ export default defineComponent({
         },
         {
           team_id: 3,
-          team_name: 'Wetenschappen',
+          team_name: 'Wetenschappen - VLAK - VETO',
           rounds: 2,
           progress: 0.3,
           speed: 0.03,
