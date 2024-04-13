@@ -4,6 +4,8 @@
     :points="points"
     :teams="teams"
     :img="img"
+    :showPoints="showPoints"
+    :showTrack="showTrack"
   />
   <MessageComponent :message="message" />
   <LeaderboardComponent :teams="teams" class="mt-3 mb-3" />
@@ -25,6 +27,7 @@ export default defineComponent({
   data() {
     return {
       showPoints: false,
+      showTrack: false,
       mounted: false,
       img: '',
       points: [
@@ -76,6 +79,8 @@ export default defineComponent({
       this.img = config.img;
       this.points = config.points;
       this.wsEndpoint = config.wsEndpoint;
+      this.showPoints = config.showPoints;
+      this.showTrack = config.showTrack;
     },
     async connectWebSocket(timeout = 0) {
       timeout = Math.min(timeout, 5000);

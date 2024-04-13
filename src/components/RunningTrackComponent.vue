@@ -2,7 +2,7 @@
   <div class="img-overlay-wrap">
     <img src="/tracks/12urenloop-empty.jpg" alt="12urenloop parcours Gent Sint-Pietersplein" />
     <svg viewBox="0 0 4032 2268" xmlns="http://www.w3.org/2000/svg">
-      <path id="path" :d="path" fill="none" stroke="black" stroke-width="5" stroke-linejoin="round" />
+      <path id="path" :d="path" fill="none" stroke="black" :stroke-width="showTrack ? 5 : 0" stroke-linejoin="round" />
 
       <!-- Points -->
       <template v-if="showPoints">
@@ -22,11 +22,8 @@ export default defineComponent({
     points: Array<{ x: number, y: number }>,
     teams: Array<Team>,
     img: String,
-  },
-  data() {
-    return {
-      showPoints: false,
-    };
+    showPoints: Boolean,
+    showTrack: Boolean,
   },
   computed: {
     path() {

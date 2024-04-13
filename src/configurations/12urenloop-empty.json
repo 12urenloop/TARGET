@@ -1,6 +1,8 @@
 {
   "img": "/tracks/12urenloop-empty.jpg",
   "wsEndpoint": "wss://loxsi.12urenloop.be/feed",
+  "showPoints": false,
+  "showTrack": true,
   "points": [
     {
       "x": 3200,
