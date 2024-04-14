@@ -17,6 +17,7 @@ import RunningTrackComponent from '@/components/RunningTrackComponent.vue';
 import LeaderboardComponent from '@/components/LeaderboardComponent.vue';
 import { type Count, type Position, type SocketMsg, socketMsgHandler } from '@/assets/loxsi';
 import MessageComponent from '@/components/MessageComponent.vue';
+import type { Team } from '@/assets/team';
 
 export default defineComponent({
   name: 'TargetComponent',
@@ -35,35 +36,7 @@ export default defineComponent({
       ],
       wsEndpoint: '',
       message: '',
-      teams: [
-        {
-          team_id: 1,
-          team_name: 'VTK',
-          rounds: 2,
-          progress: 0.5,
-          speed: 0.03,
-          timestamp: new Date().getTime(),
-          show: true,
-        },
-        {
-          team_id: 2,
-          team_name: 'VGK',
-          rounds: 3,
-          progress: 0.7,
-          speed: 0.02 + Math.random() / 150,
-          timestamp: new Date().getTime(),
-          show: true,
-        },
-        {
-          team_id: 3,
-          team_name: 'Wetenschappen - VLAK - VETO',
-          rounds: 2,
-          progress: 0.3,
-          speed: 0.02 + Math.random() / 150,
-          timestamp: new Date().getTime(),
-          show: true,
-        },
-      ],
+      teams: [] as Team[],
     };
   },
   async mounted() {
@@ -153,7 +126,7 @@ export default defineComponent({
         if (team) {
           team.progress = position.progress;
           team.speed = position.speed;
-          team.timestamp = new Date().getTime();
+          team.timestamp = position.timestamp;
         } else {
           console.error(`ERROR: could not find team with id ${position.team_id} while processing position message`);
         }
