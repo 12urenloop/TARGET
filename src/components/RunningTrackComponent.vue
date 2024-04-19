@@ -2,6 +2,72 @@
   <div class="img-overlay-wrap">
     <img :src="img" alt="12urenloop parcours Gent Sint-Pietersplein" />
     <svg viewBox="0 0 4032 2268" xmlns="http://www.w3.org/2000/svg">
+
+      <defs>
+
+        <filter id="gold" height="300%" width="300%" x="-75%" y="-75%">
+          <!-- Thicken out the original shape -->
+          <feMorphology operator="dilate" radius="15" in="SourceAlpha" result="thicken" />
+
+          <!-- Use a gaussian blur to create the soft blurriness of the glow -->
+          <feGaussianBlur in="thicken" stdDeviation="10" result="blurred" />
+
+          <!-- Change the colour -->
+          <feFlood flood-color="rgb(249,215,126)" result="glowColor" />
+
+          <!-- Color in the glows -->
+          <feComposite in="glowColor" in2="blurred" operator="in" result="softGlow_colored" />
+
+          <!--	Layer the effects together -->
+          <feMerge>
+            <feMergeNode in="softGlow_colored"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+
+        <filter id="silver" height="300%" width="300%" x="-75%" y="-75%">
+          <!-- Thicken out the original shape -->
+          <feMorphology operator="dilate" radius="15" in="SourceAlpha" result="thicken" />
+
+          <!-- Use a gaussian blur to create the soft blurriness of the glow -->
+          <feGaussianBlur in="thicken" stdDeviation="10" result="blurred" />
+
+          <!-- Change the colour -->
+          <feFlood flood-color="rgb(192,192,192)" result="glowColor" />
+
+          <!-- Color in the glows -->
+          <feComposite in="glowColor" in2="blurred" operator="in" result="softGlow_colored" />
+
+          <!--	Layer the effects together -->
+          <feMerge>
+            <feMergeNode in="softGlow_colored"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+
+        <filter id="bronze" height="300%" width="300%" x="-75%" y="-75%">
+          <!-- Thicken out the original shape -->
+          <feMorphology operator="dilate" radius="15" in="SourceAlpha" result="thicken" />
+
+          <!-- Use a gaussian blur to create the soft blurriness of the glow -->
+          <feGaussianBlur in="thicken" stdDeviation="10" result="blurred" />
+
+          <!-- Change the colour -->
+          <feFlood flood-color="rgb(160,88,34)" result="glowColor" />
+
+          <!-- Color in the glows -->
+          <feComposite in="glowColor" in2="blurred" operator="in" result="softGlow_colored" />
+
+          <!--	Layer the effects together -->
+          <feMerge>
+            <feMergeNode in="softGlow_colored"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+
+        </filter>
+
+      </defs>
+
       <path id="path" :d="path" fill="none" stroke="black" :stroke-width="showTrack ? 5 : 0" stroke-linejoin="round" />
 
       <!-- Points -->
@@ -57,7 +123,7 @@ export default defineComponent({
   methods: {
     updateTeams() {
       const now = new Date().getTime();
-      this.teams?.forEach(team => {
+      this.teams?.forEach((team, index) => {
         // Progress is in percentage of the path
         // Speed is in percentage of the path per millisecond
         team.progress += team.speed * (now - team.timestamp);
@@ -66,13 +132,13 @@ export default defineComponent({
         // If the team is at the end of the path, reset it to the start
         team.progress = team.progress % 1;
 
-        this.drawTeam(team);
+        this.drawTeam(team, index);
       });
 
       // Now update the teams every frame.
       requestAnimationFrame(this.updateTeams);
     },
-    drawTeam(team: Team) {
+    drawTeam(team: Team, index: number) {
       // Calculate the point on the path
       const path = document.getElementById('path') as unknown as SVGGeometryElement;
       const length = path.getTotalLength();
@@ -85,6 +151,10 @@ export default defineComponent({
         teamImage.setAttribute('x', (point.x - 50).toString());
         teamImage.setAttribute('y', (point.y - 50).toString());
         teamImage.style.display = team.show ? 'block' : 'none';
+        if (index === 0) teamImage.setAttribute('filter', 'url(#gold)');
+        else if (index === 1) teamImage.setAttribute('filter', 'url(#silver)');
+        else if (index === 2) teamImage.setAttribute('filter', 'url(#bronze)');
+        else teamImage.removeAttribute('filter');
       } else {
         const svg = document.querySelector('svg') as SVGSVGElement;
         const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
@@ -94,6 +164,9 @@ export default defineComponent({
         image.setAttribute('width', '100'); // Set the width and height of the image
         image.style.display = team.show ? 'block' : 'none';
         image.setAttribute('href', `/teams/${team.team_name.split('-')[0].trim().toLowerCase()}.png`);
+        if (index === 0) image.setAttribute('filter', 'url(#gold)');
+        else if (index === 1) image.setAttribute('filter', 'url(#silver)');
+        else if (index === 2) image.setAttribute('filter', 'url(#bronze)');
         svg.appendChild(image);
       }
     },
