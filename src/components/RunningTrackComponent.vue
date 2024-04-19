@@ -59,8 +59,8 @@ export default defineComponent({
       const now = new Date().getTime();
       this.teams?.forEach(team => {
         // Progress is in percentage of the path
-        // Speed is in percentage of the path per second
-        team.progress += team.speed * (now - team.timestamp) / 1000;
+        // Speed is in percentage of the path per millisecond
+        team.progress += team.speed * (now - team.timestamp);
         team.timestamp = now;
 
         // If the team is at the end of the path, reset it to the start
