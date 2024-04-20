@@ -20,8 +20,8 @@
 
           <!--	Layer the effects together -->
           <feMerge>
-            <feMergeNode in="softGlow_colored"/>
-            <feMergeNode in="SourceGraphic"/>
+            <feMergeNode in="softGlow_colored" />
+            <feMergeNode in="SourceGraphic" />
           </feMerge>
         </filter>
 
@@ -40,8 +40,8 @@
 
           <!--	Layer the effects together -->
           <feMerge>
-            <feMergeNode in="softGlow_colored"/>
-            <feMergeNode in="SourceGraphic"/>
+            <feMergeNode in="softGlow_colored" />
+            <feMergeNode in="SourceGraphic" />
           </feMerge>
         </filter>
 
@@ -60,8 +60,8 @@
 
           <!--	Layer the effects together -->
           <feMerge>
-            <feMergeNode in="softGlow_colored"/>
-            <feMergeNode in="SourceGraphic"/>
+            <feMergeNode in="softGlow_colored" />
+            <feMergeNode in="SourceGraphic" />
           </feMerge>
 
         </filter>
@@ -122,10 +122,14 @@ export default defineComponent({
   },
   methods: {
     updateTeams() {
-      const now = new Date().getTime();
+      const now = Date.now();
       this.teams?.forEach((team, index) => {
         // Progress is in percentage of the path
         // Speed is in percentage of the path per millisecond
+        // Acceleration is in percentage of the path per millisecond squared
+        team.speed += team.acceleration * (now - team.timestamp);
+        // Runners never go backwards
+        team.speed = Math.max(0, team.speed);
         team.progress += team.speed * (now - team.timestamp);
         team.timestamp = now;
 

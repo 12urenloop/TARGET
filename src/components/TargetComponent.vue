@@ -112,7 +112,8 @@ export default defineComponent({
             team_name: count.team.name,
             rounds: count.count,
             progress: 0,
-            speed: 0.02 + Math.random() / 150,
+            speed: 0,
+            acceleration: 0,
             timestamp: new Date().getTime(),
             show: true,
           });
@@ -126,6 +127,7 @@ export default defineComponent({
         if (team) {
           team.progress = position.progress;
           team.speed = position.speed;
+          team.acceleration = position.acceleration || 0;
           team.timestamp = position.timestamp;
         } else {
           console.error(`ERROR: could not find team with id ${position.team_id} while processing position message`);

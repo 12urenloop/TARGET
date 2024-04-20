@@ -5,6 +5,7 @@ export interface Team {
   rounds: number;
   progress: number;
   speed: number;
+  acceleration: number;
   timestamp: number;
   show: boolean;
 }

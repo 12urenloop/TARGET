@@ -16,6 +16,7 @@ export type Position = {
   team_id: number;
   progress: number;
   speed: number;
+  acceleration: number;
   timestamp: number;
 }
 
