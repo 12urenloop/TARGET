@@ -137,7 +137,7 @@ export default defineComponent({
       }
     },
     handleNewMessage(message: string) {
-      this.message = message;
+      this.message = message.trim();
     },
     handleNewFrozen(frozen: boolean) {
       this.frozen = frozen;
