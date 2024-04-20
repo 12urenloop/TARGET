@@ -72,7 +72,6 @@ export default defineComponent({
         await this.connectWebSocket(timeout + 1000);
       };
       ws.onmessage = (event) => {
-        console.log(event.data);
         this.parseWebsocketMessage(event.data);
       };
     },
@@ -101,7 +100,6 @@ export default defineComponent({
       }
     },
     handleNewCounts(counts: Count[]) {
-      console.log(counts);
       for (const count of counts) {
         const team = this.teams.find((team) => team.team_id === count.team.id);
         if (team) {
@@ -121,7 +119,6 @@ export default defineComponent({
       }
     },
     handleNewPosition(positions: Position[]) {
-      console.log(positions);
       for (const position of positions) {
         const team = this.teams.find((team) => team.team_id === position.team_id);
         if (team) {
@@ -135,7 +132,6 @@ export default defineComponent({
       }
     },
     handleNewMessage(message: string) {
-      console.log(message);
       this.message = message;
     },
   },
