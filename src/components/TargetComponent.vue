@@ -1,11 +1,12 @@
 <template>
   <RunningTrackComponent
-    v-if="mounted"
+    v-if="mounted && !frozen"
     :points="points"
     :teams="teams"
     :img="img"
     :showPoints="showPoints"
     :showTrack="showTrack"
+    :frozen="frozen"
   />
   <MessageComponent :message="message" />
   <LeaderboardComponent :teams="teams" class="mt-3 mb-3" />
@@ -37,6 +38,7 @@ export default defineComponent({
       wsEndpoint: '',
       message: '',
       teams: [] as Team[],
+      frozen: false,
     };
   },
   async mounted() {
@@ -92,6 +94,9 @@ export default defineComponent({
           case 'message':
             this.handleNewMessage(result);
             break;
+          case 'frozen':
+            this.handleNewFrozen(result);
+            break;
           default:
             console.error(`ERROR: unknown websocket message topic: ${socketMsg.topic}`);
         }
@@ -133,6 +138,9 @@ export default defineComponent({
     },
     handleNewMessage(message: string) {
       this.message = message;
+    },
+    handleNewFrozen(frozen: boolean) {
+      this.frozen = frozen;
     },
   },
 });

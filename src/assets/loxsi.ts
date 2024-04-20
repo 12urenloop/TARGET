@@ -40,4 +40,7 @@ export const socketMsgHandler: Record<string, SocketHandler> = {
   position: (msg: SocketMsg<Position[]>): Position[] => {
     return msg.data;
   },
+  frozen: (msg: SocketMsg<boolean>): boolean => {
+    return msg.data;
+  }
 };
