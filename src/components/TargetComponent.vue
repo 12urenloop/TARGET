@@ -9,7 +9,7 @@
     :frozen="frozen"
   />
   <MessageComponent :message="message" />
-  <LeaderboardComponent :teams="teams" class="mt-3 mb-3" />
+  <LeaderboardComponent :teams="teams" :frozen="frozen" class="mt-3 mb-3" />
 </template>
 
 <script lang="ts">

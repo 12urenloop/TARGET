@@ -15,14 +15,16 @@
         <td>{{ index + 1 }}</td>
         <td>
           <img v-for="team_name in team.team_name.split('-')"
-            :src="`/teams/${team_name.trim().toLowerCase()}.png`"
-            :alt="`Logo ${team_name}`"
+               :src="`/teams/${team_name.trim().toLowerCase()}.png`"
+               :alt="`Logo ${team_name}`"
           />
         </td>
         <td>{{ team.team_name }}</td>
         <td>
           <MDBProgress :height="20">
-            <MDBProgressBar :value="team.rounds" :min="0" :max="maxRounds"><b>{{ team.rounds }}</b></MDBProgressBar>
+            <MDBProgressBar :value="team.rounds" :min="0" :max="maxRounds" striped :animated="!frozen">
+              <b>{{ team.rounds }}</b>
+            </MDBProgressBar>
           </MDBProgress>
         </td>
         <td>
@@ -44,6 +46,7 @@ export default defineComponent({
   components: { MDBTable, MDBCheckbox, MDBProgress, MDBProgressBar },
   props: {
     teams: Array<Team>,
+    frozen: Boolean,
   },
   computed: {
     maxRounds() {
@@ -72,10 +75,12 @@ img {
   background-color: #2c2ca0;
   border-color: #2c2ca0;
 }
+
 .form-check-input:checked {
   background-color: #2c2ca0;
   border-color: #2c2ca0;
 }
+
 .form-check-input:focus {
   background-color: #2c2ca0 !important;
 }
