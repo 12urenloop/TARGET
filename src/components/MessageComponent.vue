@@ -13,6 +13,7 @@ export default defineComponent({
   name: 'MessageComponent',
   props: {
     message: String,
+    fontSize: String,
   },
 });
 </script>
@@ -21,7 +22,7 @@ export default defineComponent({
 .alert-warning {
   background-color: #fc0;
   color: #2c2ca0;
-  font-size: 1.5rem;
+  font-size: v-bind(fontSize);
   padding-bottom: 0.8rem;
   padding-top: 0.8rem;
 }

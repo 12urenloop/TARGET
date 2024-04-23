@@ -8,7 +8,7 @@
     :showTrack="showTrack"
     :frozen="frozen"
   />
-  <MessageComponent :message="message" />
+  <MessageComponent :message="message" font-size="1.5rem" />
   <LeaderboardComponent :teams="teams" :frozen="frozen" class="mt-3 mb-3" />
 </template>
 

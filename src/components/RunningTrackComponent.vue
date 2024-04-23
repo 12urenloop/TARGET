@@ -204,3 +204,9 @@ export default defineComponent({
   left: 0;
 }
 </style>
+
+<style>
+body::-webkit-scrollbar {
+  display: none;
+}
+</style>

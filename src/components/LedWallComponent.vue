@@ -1,6 +1,6 @@
 <template>
   <div class="vh-100 bg-black">
-    <MessageComponent :message="message" class="message d-flex align-items-center" />
+    <MessageComponent :message="message" class="message d-flex align-items-center" font-size="2rem" />
     <div class="d-flex flex-wrap justify-content-center">
       <div class="team pb-1 pt-1 pb-2 pe-2" v-for="(team, index) in teams" :key="team.team_id">
         <MDBCard class="bg-dark">
@@ -9,9 +9,9 @@
             <div class="rank text-white rounded-bottom rounded-4 rounded-start border-bottom border-start border-3">
               &nbsp;{{ index + 1}}&nbsp;
             </div>
-            <h1 class="text-white">{{ team.team_name }}</h1>
+            <h1 class="text-white"><b>{{ team.team_name }}</b></h1>
 
-            <RotatingImages class="flex-fill" :team-names="team.team_name.split('-')" width="5vh" height="auto"
+            <RotatingImages class="flex-fill" :team-names="team.team_name.split('-')" width="7vh" height="auto"
                             items-class="d-block w-100" />
 
             <MDBProgress :height="50" class="">
@@ -25,8 +25,8 @@
     </div>
     <img
       loading="lazy"
-      width="100"
-      height="100"
+      width="150"
+      height="150"
       src="https://zinc.zeus.gent/zeus"
       class="zeus"
       alt="Zeus WPI"
@@ -34,8 +34,8 @@
     />
     <img
       loading="lazy"
-      width="100"
-      height="100"
+      width="150"
+      height="150"
       src="https://12urenloop.be/images/logo.svg"
       class="urenloop"
       alt="12urenloop"
@@ -127,7 +127,7 @@ export default defineComponent({
 }
 
 h1 {
-  font-size: 1.7rem;
+  font-size: 2rem;
 }
 
 .progress {
@@ -138,14 +138,14 @@ h1 {
 .progress-bar {
   background-color: #fc0;
   color: #2c2ca0;
-  font-size: 1.5rem;
+  font-size: 2.5rem;
 }
 
 .rank {
   position: absolute;
   top: 0;
   right: 0;
-  font-size: 1.5rem;
+  font-size: 1.7rem;
 }
 
 .zeus {

@@ -23,6 +23,7 @@ import RunningTrackComponent from '@/components/RunningTrackComponent.vue';
 const routes = {
   '/': TargetComponent,
   '/ledwall': LedWallComponent,
+  '/ledwall-target': RunningTrackComponent,
 };
 type Route = keyof typeof routes;
 
