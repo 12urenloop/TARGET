@@ -125,7 +125,8 @@ export default defineComponent({
     updateTeams() {
       const now = Date.now();
       if (!this.frozen) {
-        this.teams?.forEach((team, index) => {
+        const length = this.teams?.length || 0;
+        this.sortedDrawingOrder(this.teams).forEach((team, index) => {
           // Progress is in percentage of the path
           // Speed is in percentage of the path per millisecond
           // Acceleration is in percentage of the path per millisecond squared
@@ -138,7 +139,7 @@ export default defineComponent({
           // If the team is at the end of the path, reset it to the start
           team.progress = team.progress % 1;
 
-          this.drawTeam(team, index);
+          this.drawTeam(team, length - 1 - index);
         });
       }
 
@@ -176,6 +177,9 @@ export default defineComponent({
         else if (index === 2) image.setAttribute('filter', 'url(#bronze)');
         svg.appendChild(image);
       }
+    },
+    sortedDrawingOrder(teams: Array<Team> | undefined) {
+      return [...teams || []].sort((a, b) => a.rounds - b.rounds);
     },
   },
 });

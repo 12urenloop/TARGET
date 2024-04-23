@@ -117,7 +117,7 @@ export default defineComponent({
             progress: 0,
             speed: 0,
             acceleration: 0,
-            timestamp: new Date().getTime(),
+            timestamp: Date.now(),
             show: true,
           });
         }
