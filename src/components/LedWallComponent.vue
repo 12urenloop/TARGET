@@ -2,9 +2,12 @@
   <div class="vh-100 bg-black">
     <MessageComponent :message="message" class="message d-flex align-items-center" />
     <div class="d-flex flex-wrap justify-content-center">
-      <div class="team pb-1 pt-1 pb-2 pe-2" v-for="team in teams" :key="team.team_id">
+      <div class="team pb-1 pt-1 pb-2 pe-2" v-for="(team, index) in teams" :key="team.team_id">
         <MDBCard class="bg-dark">
           <MDBCardBody class="text-center d-flex flex-column align-items-center">
+            <div class="rank text-white rounded-bottom rounded-4 rounded-start border-bottom border-start border-3">
+              &nbsp;{{ index + 1}}&nbsp;
+            </div>
             <h1 class="text-white">{{ team.team_name }}</h1>
 
             <RotatingImages class="flex-fill" :team-names="team.team_name.split('-')" width="5vh" height="auto"
@@ -102,6 +105,13 @@ h1 {
 .progress-bar {
   background-color: #fc0;
   color: #2c2ca0;
+  font-size: 1.5rem;
+}
+
+.rank {
+  position: absolute;
+  top: 0;
+  right: 0;
   font-size: 1.5rem;
 }
 
