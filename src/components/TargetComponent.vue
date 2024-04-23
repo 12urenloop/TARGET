@@ -27,7 +27,6 @@ export default defineComponent({
     showTrack: Boolean,
     img: String,
     points: Array<{ x: number, y: number }>,
-    wsEndpoint: String,
     message: String,
     teams: Array<Team>,
     frozen: Boolean,

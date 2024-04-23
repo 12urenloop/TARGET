@@ -1,6 +1,6 @@
 <template>
   <div class="container" v-if="message">
-    <div class="alert alert-warning" role="alert">
+    <div class="alert alert-warning w-100" role="alert">
       {{ message }}
     </div>
   </div>

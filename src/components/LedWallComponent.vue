@@ -1,5 +1,6 @@
 <template>
   <div class="vh-100 bg-black">
+    <MessageComponent :message="message" class="message d-flex align-items-center" />
     <div class="d-flex flex-wrap justify-content-center">
       <div class="team pb-1 pt-1 pb-2 pe-2" v-for="team in teams" :key="team.team_id">
         <MDBCard class="bg-dark">
@@ -26,10 +27,12 @@ import { MDBCard, MDBCardBody, MDBProgress, MDBProgressBar } from 'mdb-vue-ui-ki
 import { defineComponent } from 'vue';
 import type { Team } from '@/assets/team';
 import RotatingImages from '@/components/RotatingImages.vue';
+import MessageComponent from '@/components/MessageComponent.vue';
 
 export default defineComponent({
   name: 'LedWallComponent',
   components: {
+    MessageComponent,
     MDBProgressBar,
     MDBProgress,
     RotatingImages,
@@ -41,7 +44,6 @@ export default defineComponent({
     showTrack: Boolean,
     img: String,
     points: Array<{ x: number, y: number }>,
-    wsEndpoint: String,
     message: String,
     teams: Array<Team>,
     frozen: Boolean,
@@ -58,6 +60,10 @@ export default defineComponent({
 .team {
   width: 16vw;
   height: 30vh;
+}
+
+.message {
+  height: 10vh;
 }
 
 .card {

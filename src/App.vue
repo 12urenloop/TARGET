@@ -2,6 +2,7 @@
   <main>
     <component :is="currentView"
                :points="points"
+               :message="message"
                :teams="teams"
                :img="img"
                :showPoints="showPoints"
