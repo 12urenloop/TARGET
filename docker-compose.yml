@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+    live_site:
+        build:
+            context: .
+            tags:
+              - 12ul_target:latest
+        container_name: live_site_target
+        restart: unless-stopped
+        ports:
+            - "4000:80"
