@@ -14,10 +14,7 @@
       <tr v-for="(team, index) in sorted(teams ?? [])" :key="team.team_id">
         <td>{{ index + 1 }}</td>
         <td>
-          <img v-for="team_name in team.team_name.split('-')"
-               :src="`/teams/${team_name.trim().toLowerCase()}.png`"
-               :alt="`Logo ${team_name}`"
-          />
+          <RotatingImages class="flex-fill team-logo" :team-names="team.team_name.split('-')" width="auto" height="30px" items-class="d-block" />
         </td>
         <td>{{ team.team_name }}</td>
         <td>
@@ -40,10 +37,11 @@
 import { defineComponent } from 'vue';
 import { MDBCheckbox, MDBProgress, MDBProgressBar, MDBTable } from 'mdb-vue-ui-kit';
 import type { Team } from '@/assets/team';
+import RotatingImages from '@/components/RotatingImages.vue';
 
 export default defineComponent({
   name: 'LeaderboardComponent',
-  components: { MDBTable, MDBCheckbox, MDBProgress, MDBProgressBar },
+  components: { RotatingImages, MDBTable, MDBCheckbox, MDBProgress, MDBProgressBar },
   props: {
     teams: Array<Team>,
     frozen: Boolean,
@@ -62,9 +60,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-img {
-  height: 30px;
-}
 .progress-bar {
   background-color: #fc0;
   color: #2c2ca0;

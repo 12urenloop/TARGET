@@ -6,7 +6,8 @@
           <MDBCardBody class="text-center d-flex flex-column align-items-center">
             <h1 class="text-white">{{ team.team_name }}</h1>
 
-            <RotatingImages class="flex-fill" :team-names="team.team_name.split('-')" />
+            <RotatingImages class="flex-fill" :team-names="team.team_name.split('-')" width="5vh" height="auto"
+                            items-class="d-block w-100" />
 
             <MDBProgress :height="50" class="">
               <MDBProgressBar :value="team.rounds" :min="0" :max="maxRounds" striped :animated="!frozen">

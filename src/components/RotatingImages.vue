@@ -6,6 +6,7 @@
       :items="items"
       :controls="false"
       :indicators="false"
+      :items-class="itemsClass"
     />
     <img v-if="teamNames?.length && teamNames.length === 1"
          :src="`/teams/${teamNames![showingIndex].trim().toLowerCase()}.png`" alt="logo" />
@@ -21,6 +22,9 @@ export default defineComponent({
   components: { MDBCarousel },
   props: {
     teamNames: Array<String>,
+    width: String,
+    height: String,
+    itemsClass: String,
   },
   data() {
     return {
@@ -52,8 +56,16 @@ export default defineComponent({
 }
 
 .logo-img > * {
-  width: 5vw;
-  height: auto;
+  width: v-bind(width);
+  height: v-bind(height);
   object-fit: contain;
+}
+
+.carousel-item, .carousel-inner, .carousel-item-start, .carousel-item-next {
+  height: 100%;
+}
+
+.carousel-item > img {
+  height: 100%;
 }
 </style>
