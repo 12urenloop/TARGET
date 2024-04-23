@@ -8,4 +8,8 @@ export interface Team {
   acceleration: number;
   timestamp: number;
   show: boolean;
+  // Last time the round data was changed by loxsi
+  updatedAt: number;
+  // Last 30 rounds
+  lastRounds: number[];
 }

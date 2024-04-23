@@ -122,7 +122,16 @@ export default defineComponent({
       for (const count of counts) {
         const team = this.teams.find((team) => team.team_id === count.team.id);
         if (team) {
-          team.rounds = count.count;
+          let areLastRoundesLowerThanOptimisticUpdate = team.lastRounds.length === 30 && team.lastRounds.every(r => r < team.rounds);
+          let wasPositionerFasterButRunnerStopped = team.rounds > count.count && areLastRoundesLowerThanOptimisticUpdate;
+          if (wasPositionerFasterButRunnerStopped || team.rounds < count.count) {
+            team.rounds = count.count;
+            team.updatedAt = Date.now();
+          }
+
+          team.lastRounds.push(count.count);
+          // Keep the last 30 rounds
+          team.lastRounds = team.lastRounds.slice(-30);
         } else {
           this.teams.push({
             team_id: count.team.id,
@@ -133,6 +142,8 @@ export default defineComponent({
             acceleration: 0,
             timestamp: Date.now(),
             show: true,
+            updatedAt: Date.now(),
+            lastRounds: [0, 0, 0]
           });
         }
       }
