@@ -19,6 +19,24 @@
         </MDBCard>
       </div>
     </div>
+    <img
+      loading="lazy"
+      width="100"
+      height="100"
+      src="https://zinc.zeus.gent/zeus"
+      class="zeus"
+      alt="Zeus WPI"
+      data-recalc-dims="1"
+    />
+    <img
+      loading="lazy"
+      width="100"
+      height="100"
+      src="https://12urenloop.be/images/logo.svg"
+      class="urenloop"
+      alt="12urenloop"
+      data-recalc-dims="1"
+    />
   </div>
 </template>
 
@@ -85,5 +103,17 @@ h1 {
   background-color: #fc0;
   color: #2c2ca0;
   font-size: 1.5rem;
+}
+
+.zeus {
+  float: right;
+  margin-top: -11em;
+  margin-right: 2em;
+}
+
+.urenloop {
+  float: left;
+  margin-top: -11em;
+  margin-left: 2em;
 }
 </style>
