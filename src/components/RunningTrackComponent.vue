@@ -136,6 +136,10 @@ export default defineComponent({
           team.progress += team.speed * (now - team.timestamp);
           team.timestamp = now;
 
+          if (team.progress >= 1 && team.updatedAt < (now - 5000)) {
+            team.rounds += 1;
+          }
+
           // If the team is at the end of the path, reset it to the start
           team.progress = team.progress % 1;
 
