@@ -22,7 +22,7 @@ export default defineComponent({
   components: { MDBCarousel },
   props: {
     teamNames: Array<String>,
-    width: String,
+    minwidth: String,
     height: String,
     itemsClass: String,
   },
@@ -56,9 +56,13 @@ export default defineComponent({
 }
 
 .logo-img > * {
-  width: v-bind(width);
+  min-width: v-bind(minwidth);
   height: v-bind(height);
   object-fit: contain;
+}
+
+.carousel-inner img {
+  margin: auto;
 }
 
 .carousel-item, .carousel-inner, .carousel-item-start, .carousel-item-next {

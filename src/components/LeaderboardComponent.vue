@@ -14,7 +14,7 @@
       <tr v-for="(team, index) in sorted(teams ?? [])" :key="team.team_id">
         <td>{{ index + 1 }}</td>
         <td>
-          <RotatingImages class="flex-fill team-logo" :team-names="team.team_name.split('-')" width="auto" height="30px" items-class="d-block" />
+          <RotatingImages class="flex-fill team-logo" :team-names="team.team_name.split('-')" minwidth="60px" height="30px" items-class="d-block" />
         </td>
         <td>{{ team.team_name }}</td>
         <td>
