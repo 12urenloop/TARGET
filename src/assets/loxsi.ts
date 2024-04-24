@@ -42,5 +42,8 @@ export const socketMsgHandler: Record<string, SocketHandler> = {
   },
   frozen: (msg: SocketMsg<boolean>): boolean => {
     return msg.data;
-  }
+  },
+  refresh: (msg: SocketMsg<boolean>): boolean => {
+    return msg.data;
+  },
 };

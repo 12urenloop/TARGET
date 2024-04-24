@@ -111,6 +111,9 @@ export default defineComponent({
           case 'frozen':
             this.handleNewFrozen(result);
             break;
+          case 'refresh':
+            this.handleNewRefresh(result);
+            break;
           default:
             console.error(`ERROR: unknown websocket message topic: ${socketMsg.topic}`);
         }
@@ -143,7 +146,7 @@ export default defineComponent({
             timestamp: Date.now(),
             show: true,
             updatedAt: Date.now(),
-            lastRounds: [0, 0, 0]
+            lastRounds: [0, 0, 0],
           });
         }
       }
@@ -167,7 +170,15 @@ export default defineComponent({
     handleNewFrozen(frozen: boolean) {
       this.frozen = frozen;
     },
-  }
+    handleNewRefresh(refresh: boolean) {
+      if (refresh) {
+        setTimeout(function() {
+          // @ts-expect-error
+          location.reload(true);
+        }, Math.random() * 10000);
+      }
+    },
+  },
 });
 </script>
 
