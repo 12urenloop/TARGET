@@ -4,7 +4,7 @@ module.exports = () => ({
   plugins:
     process.env.NODE_ENV === 'production'
       ? [
-        purgecss({
+        /*purgecss({
           content: ['dist/index.html', 'dist/assets/*.js'],
           css: ['dist/assets/*.css'],
           safelist: [
@@ -33,7 +33,7 @@ module.exports = () => ({
             /^sidenav-/,
           ],
           output: 'dist/assets',
-        }),
+        }),*/
       ]
       : [],
 });
