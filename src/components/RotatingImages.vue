@@ -1,15 +1,9 @@
 <template>
   <div class="logo-img">
-    <MDBCarousel
-      v-if="teamNames?.length && teamNames.length > 1"
-      v-model="carousel"
-      :items="items"
-      :controls="false"
-      :indicators="false"
-      :items-class="itemsClass"
-    />
+    <MDBCarousel v-if="teamNames?.length && teamNames.length > 1" v-model="carousel" :items="items" :controls="false"
+      :indicators="false" :items-class="itemsClass" />
     <img v-if="teamNames?.length && teamNames.length === 1"
-         :src="`/teams/${teamNames![showingIndex].trim().toLowerCase()}.png`" alt="logo" />
+      :src="`/teams/${teamNames![showingIndex].trim().toLowerCase()}.png`" alt="logo" />
   </div>
 </template>
 
@@ -55,8 +49,9 @@ export default defineComponent({
   justify-content: center;
 }
 
-.logo-img > * {
+.logo-img>* {
   min-width: v-bind(minwidth);
+  max-width: 7vw;
   height: v-bind(height);
   object-fit: contain;
 }
@@ -65,11 +60,14 @@ export default defineComponent({
   margin: auto;
 }
 
-.carousel-item, .carousel-inner, .carousel-item-start, .carousel-item-next {
+.carousel-item,
+.carousel-inner,
+.carousel-item-start,
+.carousel-item-next {
   height: 100%;
 }
 
-.carousel-item > img {
+.carousel-item>img {
   height: 100%;
 }
 </style>
