@@ -1,6 +1,6 @@
 <template>
   <div class="img-overlay-wrap">
-    <img :src="img" alt="12urenloop parcours Gent Sint-Pietersplein" />
+    <img :src="img" alt="12urenloop parcours Gent Sint-Pietersplein" width="4032" height="2268" />
     <svg viewBox="0 0 4032 2268" xmlns="http://www.w3.org/2000/svg">
 
       <defs>
