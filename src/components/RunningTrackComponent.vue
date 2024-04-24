@@ -154,8 +154,14 @@ export default defineComponent({
 
       // Draw the team on the SVG
       // If the team is already drawn, update its position
-      const teamImage = document.getElementById(`team-${team.team_id}`) as unknown as SVGImageElement;
-      if (teamImage) {
+      const teamImage = document.getElementById(`team-${team.team_id}-img`) as unknown as SVGImageElement;
+      const teamText = document.getElementById(`team-${team.team_id}-text`) as unknown as SVGImageElement;
+      if (teamImage && teamText) {
+        teamText.setAttribute('x', (point.x - 25).toString());
+        teamText.setAttribute('y', (point.y - 60).toString());
+        teamText.style.display = team.show ? 'block' : 'none';
+        teamText.textContent = team.rounds;
+
         teamImage.setAttribute('x', (point.x - 50).toString());
         teamImage.setAttribute('y', (point.y - 50).toString());
         teamImage.style.display = team.show ? 'block' : 'none';
@@ -166,7 +172,7 @@ export default defineComponent({
       } else {
         const svg = document.querySelector('svg') as SVGSVGElement;
         const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-        image.id = `team-${team.team_id}`;
+        image.id = `team-${team.team_id}-img`;
         image.setAttribute('x', (point.x - 50).toString()); // Adjust x and y position according to image size
         image.setAttribute('y', (point.y - 50).toString());
         image.setAttribute('width', '100'); // Set the width and height of the image
@@ -176,6 +182,16 @@ export default defineComponent({
         else if (index === 1) image.setAttribute('filter', 'url(#silver)');
         else if (index === 2) image.setAttribute('filter', 'url(#bronze)');
         svg.appendChild(image);
+        
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.id = `team-${team.team_id}-text`;
+        text.setAttribute('x', (point.x - 25).toString()); // Adjust x and y position so that it's above the image
+        text.setAttribute('y', (point.y - 60).toString());
+        text.setAttribute('fill', '#fff');
+        text.setAttribute('class', 'team-score');
+        text.style.display = team.show ? 'block' : 'none';
+        text.textContent = team.rounds;
+        svg.appendChild(text);
       }
     },
     sortedDrawingOrder(teams: Array<Team> | undefined) {
@@ -202,6 +218,12 @@ export default defineComponent({
   position: absolute;
   top: 0;
   left: 0;
+}
+
+:deep(.team-score) {
+  font-size: 2.25rem;
+  font-weight: 700;
+  text-shadow: 0px 0px 3px #000;
 }
 </style>
 
