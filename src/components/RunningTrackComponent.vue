@@ -164,7 +164,7 @@ export default defineComponent({
         teamText.setAttribute('x', (point.x - 25).toString());
         teamText.setAttribute('y', (point.y - 60).toString());
         teamText.style.display = team.show ? 'block' : 'none';
-        teamText.textContent = team.rounds;
+        teamText.textContent = String(team.rounds);
 
         teamImage.setAttribute('x', (point.x - 50).toString());
         teamImage.setAttribute('y', (point.y - 50).toString());
@@ -194,7 +194,7 @@ export default defineComponent({
         text.setAttribute('fill', '#fff');
         text.setAttribute('class', 'team-score');
         text.style.display = team.show ? 'block' : 'none';
-        text.textContent = team.rounds;
+        text.textContent = String(team.rounds);
         svg.appendChild(text);
       }
     },
