@@ -1,10 +1,8 @@
 <template>
   <div class="img-overlay-wrap">
     <img :src="img" alt="12urenloop parcours Gent Sint-Pietersplein" width="4032" height="2268" />
-    <svg viewBox="0 0 4032 2268" xmlns="http://www.w3.org/2000/svg">
-
+    <svg viewBox="0 0 2570 1446" xmlns="http://www.w3.org/2000/svg">
       <defs>
-
         <filter id="gold" height="300%" width="300%" x="-75%" y="-75%">
           <!-- Thicken out the original shape -->
           <feMorphology operator="dilate" radius="15" in="SourceAlpha" result="thicken" />
@@ -63,12 +61,17 @@
             <feMergeNode in="softGlow_colored" />
             <feMergeNode in="SourceGraphic" />
           </feMerge>
-
         </filter>
-
       </defs>
 
-      <path id="path" :d="path" fill="none" stroke="black" :stroke-width="showTrack ? 5 : 0" stroke-linejoin="round" />
+      <path
+        id="path"
+        :d="path"
+        fill="none"
+        stroke="black"
+        :stroke-width="showTrack ? 5 : 0"
+        stroke-linejoin="round"
+      />
 
       <!-- Points -->
       <template v-if="showPoints">
@@ -79,13 +82,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
 import type { Team } from '@/assets/team';
+import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'RunningTrackComponent',
   props: {
-    points: Array<{ x: number, y: number }>,
+    points: Array<{ x: number; y: number }>,
     teams: Array<Team>,
     img: String,
     showPoints: Boolean,
@@ -136,7 +139,7 @@ export default defineComponent({
           team.progress += team.speed * (now - team.timestamp);
           team.timestamp = now;
 
-          if (team.progress >= 1 && team.updatedAt < (now - 5000)) {
+          if (team.progress >= 1 && team.updatedAt < now - 5000) {
             team.rounds += 1;
           }
 
@@ -158,8 +161,12 @@ export default defineComponent({
 
       // Draw the team on the SVG
       // If the team is already drawn, update its position
-      const teamImage = document.getElementById(`team-${team.team_id}-img`) as unknown as SVGImageElement;
-      const teamText = document.getElementById(`team-${team.team_id}-text`) as unknown as SVGImageElement;
+      const teamImage = document.getElementById(
+        `team-${team.team_id}-img`,
+      ) as unknown as SVGImageElement;
+      const teamText = document.getElementById(
+        `team-${team.team_id}-text`,
+      ) as unknown as SVGImageElement;
       if (teamImage && teamText) {
         teamText.setAttribute('x', (point.x - 25).toString());
         teamText.setAttribute('y', (point.y - 60).toString());
@@ -179,14 +186,17 @@ export default defineComponent({
         image.id = `team-${team.team_id}-img`;
         image.setAttribute('x', (point.x - 50).toString()); // Adjust x and y position according to image size
         image.setAttribute('y', (point.y - 50).toString());
-        image.setAttribute('width', '100'); // Set the width and height of the image
+        image.setAttribute('width', '80'); // Set the width and height of the image
         image.style.display = team.show ? 'block' : 'none';
-        image.setAttribute('href', `/teams/${team.team_name.split('-')[0].trim().toLowerCase()}.png`);
+        image.setAttribute(
+          'href',
+          `/teams/${team.team_name.split('-')[0].trim().toLowerCase()}.png`,
+        );
         if (index === 0) image.setAttribute('filter', 'url(#gold)');
         else if (index === 1) image.setAttribute('filter', 'url(#silver)');
         else if (index === 2) image.setAttribute('filter', 'url(#bronze)');
         svg.appendChild(image);
-        
+
         const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
         text.id = `team-${team.team_id}-text`;
         text.setAttribute('x', (point.x - 25).toString()); // Adjust x and y position so that it's above the image
@@ -199,7 +209,7 @@ export default defineComponent({
       }
     },
     sortedDrawingOrder(teams: Array<Team> | undefined) {
-      return [...teams || []].sort((a, b) => a.rounds - b.rounds);
+      return [...(teams || [])].sort((a, b) => a.rounds - b.rounds);
     },
   },
 });
@@ -212,7 +222,8 @@ export default defineComponent({
   transition: transform 150ms ease-in-out;
 }
 
-.img-overlay-wrap img { /* <= optional, for responsiveness */
+.img-overlay-wrap img {
+  /* <= optional, for responsiveness */
   display: block;
   max-width: 100%;
   height: auto;

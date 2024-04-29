@@ -1,4 +1,4 @@
-<template>
+d<template>
   <div class="container" v-if="message">
     <div class="alert alert-warning w-100" role="alert">
       <b>{{ message }}</b>
