@@ -10,6 +10,7 @@
   />
   <MessageComponent :message="message" font-size="1.5rem" />
   <LeaderboardComponent :teams="teams" :frozen="frozen" class="mt-3 mb-3" />
+  <FooterComponent />
 </template>
 
 <script lang="ts">
@@ -18,10 +19,11 @@ import RunningTrackComponent from '@/components/RunningTrackComponent.vue';
 import LeaderboardComponent from '@/components/LeaderboardComponent.vue';
 import MessageComponent from '@/components/MessageComponent.vue';
 import type { Team } from '@/assets/team';
+import FooterComponent from '@/components/FooterComponent.vue';
 
 export default defineComponent({
   name: 'TargetComponent',
-  components: { MessageComponent, LeaderboardComponent, RunningTrackComponent },
+  components: { FooterComponent, MessageComponent, LeaderboardComponent, RunningTrackComponent },
   props: {
     showPoints: Boolean,
     showTrack: Boolean,
