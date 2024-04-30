@@ -1,6 +1,6 @@
 {
   "img": "/tracks/10urenloop.jpg",
-  "wsEndpoint": "wfalsess://loxsi.10.urenloop.be/feed",
+  "wsEndpoint": "wss://loxsi.10.urenloop.be/feed",
   "showPoints": false,
   "showTrack": false,
   "points": [
