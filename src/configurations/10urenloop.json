@@ -1,9 +1,13 @@
 {
   "img": "/tracks/10urenloop.jpg",
-  "wsEndpoint": "wss://loxsi.10.urenloop.be/feed",
-  "showPoints": true,
-  "showTrack": true,
+  "wsEndpoint": "wfalsess://loxsi.10.urenloop.be/feed",
+  "showPoints": false,
+  "showTrack": false,
   "points": [
+    {
+      "x": 915,
+      "y": 225
+    },
     {
       "x": 821,
       "y": 384
@@ -69,16 +73,12 @@
       "y": 130
     },
     {
-      "x": 1079,
+      "x": 1060,
       "y": 134
     },
     {
-      "x": 948,
-      "y": 183
-    },
-    {
-      "x": 821,
-      "y": 384
+      "x": 915,
+      "y": 225
     }
   ]
 }
