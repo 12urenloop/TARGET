@@ -82,6 +82,10 @@ export default defineComponent({
   },
   mounted() {
     this.intervalId = setInterval(() => {
+      if (this.frozen) {
+        clearInterval(this.intervalId);
+      }
+
       const now = Date.now();
       this.teams?.forEach((team) => {
         // Progress is in percentage of the path
@@ -95,6 +99,7 @@ export default defineComponent({
 
         if (team.progress >= 1 && team.updatedAt < (now - 5000)) {
           team.rounds += 1;
+          team.updatedAt = Date.now();
         }
         // If the team is at the end of the path, reset it to the start
         team.progress = team.progress % 1;
