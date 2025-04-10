@@ -130,19 +130,21 @@ export default defineComponent({
           // Progress is in percentage of the path
           // Speed is in percentage of the path per millisecond
           // Acceleration is in percentage of the path per millisecond squared
-          team.speed += team.acceleration * (now - team.timestamp);
+
+          const dt = now - team.timestamp;
+          team.progress += team.speed * dt + 0.5 * team.acceleration * dt * dt;
+          team.speed += team.acceleration * dt;
           // Runners never go backwards
           team.speed = Math.max(0, team.speed);
-          team.progress += team.speed * (now - team.timestamp);
           team.timestamp = now;
-
+ 
           if (team.progress >= 1 && team.updatedAt < (now - 5000)) {
             team.rounds += 1;
           }
-
+ 
           // If the team is at the end of the path, reset it to the start
           team.progress = team.progress % 1;
-
+ 
           this.drawTeam(team, length - 1 - index);
         });
       }
