@@ -155,9 +155,9 @@ export default defineComponent({
       for (const position of positions) {
         const team = this.teams.find((team) => team.team_id === position.team_id);
         if (team) {
-          team.progress = position.progress;
-          team.speed = position.speed;
-          team.acceleration = position.acceleration || 0;
+          team.progress = Number.isFinite(position.progress) ? position.progress : 0;
+          team.speed = Number.isFinite(position.speed) ? position.speed : 0;
+          team.acceleration = Number.isFinite(position.acceleration) ? position.acceleration : 0;
           team.timestamp = position.timestamp;
         } else {
           console.error(`ERROR: could not find team with id ${position.team_id} while processing position message`);
@@ -172,7 +172,7 @@ export default defineComponent({
     },
     handleNewRefresh(refresh: boolean) {
       if (refresh) {
-        setTimeout(function() {
+        setTimeout(function () {
           // @ts-expect-error
           location.reload(true);
         }, Math.random() * 10000);
@@ -182,6 +182,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
