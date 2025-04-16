@@ -186,7 +186,7 @@ export default defineComponent({
         else if (index === 1) image.setAttribute('filter', 'url(#silver)');
         else if (index === 2) image.setAttribute('filter', 'url(#bronze)');
         svg.appendChild(image);
-        
+
         const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
         text.id = `team-${team.team_id}-text`;
         text.setAttribute('x', (point.x - 25).toString()); // Adjust x and y position so that it's above the image
@@ -199,7 +199,12 @@ export default defineComponent({
       }
     },
     sortedDrawingOrder(teams: Array<Team> | undefined) {
-      return [...teams || []].sort((a, b) => a.rounds - b.rounds);
+      return [...teams || []].sort((a, b) => {
+        const diff = a.rounds - b.rounds
+        if (diff !== 0) return diff;
+
+        return a.updatedAt - b.updatedAt;
+      });
     },
   },
 });
