@@ -140,6 +140,7 @@ export default defineComponent({
  
           if (team.progress >= 1 && team.updatedAt < (now - 5000)) {
             team.rounds += 1;
+            team.updatedAt = Date.now();
           }
  
           // If the team is at the end of the path, reset it to the start
