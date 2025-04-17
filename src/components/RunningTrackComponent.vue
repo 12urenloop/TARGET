@@ -199,12 +199,7 @@ export default defineComponent({
       }
     },
     sortedDrawingOrder(teams: Array<Team> | undefined) {
-      return [...teams || []].sort((a, b) => {
-        const diff = a.rounds - b.rounds
-        if (diff !== 0) return diff;
-
-        return a.updatedAt - b.updatedAt;
-      });
+      return [...teams || []].sort((a, b) => (a.rounds + a.progress) - (b.rounds + b.progress));
     },
   },
 });
