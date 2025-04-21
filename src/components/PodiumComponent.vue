@@ -5,69 +5,19 @@
       <svg viewBox="0 0 2048 2048" xmlns="http://www.w3.org/2000/svg">
 
         <defs>
-
-          <filter id="gold" height="300%" width="300%" x="-75%" y="-75%">
-            <!-- Thicken out the original shape -->
-            <feMorphology operator="dilate" radius="15" in="SourceAlpha" result="thicken" />
-
-            <!-- Use a gaussian blur to create the soft blurriness of the glow -->
-            <feGaussianBlur in="thicken" stdDeviation="10" result="blurred" />
-
-            <!-- Change the colour -->
-            <feFlood flood-color="rgb(249,215,126)" result="glowColor" />
-
-            <!-- Color in the glows -->
-            <feComposite in="glowColor" in2="blurred" operator="in" result="softGlow_colored" />
-
-            <!--	Layer the effects together -->
-            <feMerge>
-              <feMergeNode in="softGlow_colored" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-
-          <filter id="silver" height="300%" width="300%" x="-75%" y="-75%">
-            <!-- Thicken out the original shape -->
-            <feMorphology operator="dilate" radius="15" in="SourceAlpha" result="thicken" />
-
-            <!-- Use a gaussian blur to create the soft blurriness of the glow -->
-            <feGaussianBlur in="thicken" stdDeviation="10" result="blurred" />
-
-            <!-- Change the colour -->
-            <feFlood flood-color="rgb(192,192,192)" result="glowColor" />
-
-            <!-- Color in the glows -->
-            <feComposite in="glowColor" in2="blurred" operator="in" result="softGlow_colored" />
-
-            <!--	Layer the effects together -->
-            <feMerge>
-              <feMergeNode in="softGlow_colored" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-
-          <filter id="bronze" height="300%" width="300%" x="-75%" y="-75%">
-            <!-- Thicken out the original shape -->
-            <feMorphology operator="dilate" radius="15" in="SourceAlpha" result="thicken" />
-
-            <!-- Use a gaussian blur to create the soft blurriness of the glow -->
-            <feGaussianBlur in="thicken" stdDeviation="10" result="blurred" />
-
-            <!-- Change the colour -->
-            <feFlood flood-color="rgb(160,88,34)" result="glowColor" />
-
-            <!-- Color in the glows -->
-            <feComposite in="glowColor" in2="blurred" operator="in" result="softGlow_colored" />
-
-            <!--	Layer the effects together -->
-            <feMerge>
-              <feMergeNode in="softGlow_colored" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-
-          </filter>
-
+          <GlowFilter id="gold" color="rgb(249,215,126)"></GlowFilter>
+          <GlowFilter id="silver" color="rgb(192,192,192)"></GlowFilter>
+          <GlowFilter id="bronze" color="rgb(160,88,34)"></GlowFilter>
         </defs>
+
+        <PodiumTeam
+          v-for="(rank, index) in podium"
+          :key="index"
+          :rank="rank"
+          :index="index"
+          :teams="teams"
+          :podium="podium"
+        />
       </svg>
     </div>
   </div>
@@ -77,9 +27,12 @@
 import { defineComponent } from 'vue';
 import type { Rank } from '@/assets/loxsi';
 import type { Team } from '@/assets/team';
+import GlowFilter from '@/components/GlowFilter.vue';
+import PodiumTeam from '@/components/PodiumTeam.vue';
 
 export default defineComponent({
   name: 'PodiumComponent',
+  components: { PodiumTeam, GlowFilter },
   props: {
     podium: Array<Rank>,
     teams: Array<Team>,
@@ -92,45 +45,6 @@ export default defineComponent({
         { x: 1570, y: 1350 },
       ],
     };
-  },
-  mounted() {
-    this.drawPodium();
-  },
-  watch: {
-    podium: {
-      handler() {
-        this.drawPodium();
-      },
-      deep: true,
-    },
-  },
-  methods: {
-    drawPodium() {
-      if (!this.podium) return;
-      for (const [index, rank] of this.podium.entries()) {
-        const svg = document.querySelector('svg') as SVGSVGElement;
-        let image = document.getElementById(`rank-${index}-img`) as unknown as SVGImageElement;
-        if (!image) {
-          image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-          image.id = `rank-${index}-img`;
-          image.setAttribute('width', '200');
-          image.style.display = 'block';
-          image.style.animation = 'updown 1s infinite';
-          svg.appendChild(image);
-        }
-        // Display teams next to each other if they share the same rank
-        const teamsAtRank = this.podium.filter(r => r.rank === rank.rank);
-        const rankIndex = teamsAtRank.findIndex(r => r.team_id === rank.team_id);
-        const offset = (rankIndex - (teamsAtRank.length - 1) / 2) * 250;
-        image.setAttribute('x', (this.positions[rank.rank].x - 100 + offset).toString());
-
-        image.setAttribute('y', (this.positions[rank.rank].y - 100).toString());
-        image.setAttribute('href', `/teams/${this.teams?.find(t => t.team_id === rank.team_id)?.team_name.split('-')[0].trim().toLowerCase()}.png`);
-        if (rank.rank === 0) image.setAttribute('filter', 'url(#gold)');
-        else if (rank.rank === 1) image.setAttribute('filter', 'url(#silver)');
-        else if (rank.rank === 2) image.setAttribute('filter', 'url(#bronze)');
-      }
-    },
   },
 });
 </script>
