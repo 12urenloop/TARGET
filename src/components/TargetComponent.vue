@@ -1,6 +1,6 @@
 <template>
   <RunningTrackComponent
-    v-if="mounted && !frozen"
+    v-if="mounted && !frozen && !podium?.length"
     :points="points"
     :teams="teams"
     :img="img"
@@ -9,6 +9,7 @@
     :frozen="frozen"
   />
   <MessageComponent :message="message" font-size="1.5rem" />
+  <PodiumComponent v-if="podium?.length" :podium="podium" :teams="teams" />
   <LeaderboardComponent :teams="teams" :frozen="frozen" class="mt-3 mb-3" />
   <FooterComponent />
 </template>
@@ -20,10 +21,12 @@ import LeaderboardComponent from '@/components/LeaderboardComponent.vue';
 import MessageComponent from '@/components/MessageComponent.vue';
 import type { Team } from '@/assets/team';
 import FooterComponent from '@/components/FooterComponent.vue';
+import type { Rank } from '@/assets/loxsi';
+import PodiumComponent from '@/components/PodiumComponent.vue';
 
 export default defineComponent({
   name: 'TargetComponent',
-  components: { FooterComponent, MessageComponent, LeaderboardComponent, RunningTrackComponent },
+  components: { PodiumComponent, FooterComponent, MessageComponent, LeaderboardComponent, RunningTrackComponent },
   props: {
     showPoints: Boolean,
     showTrack: Boolean,
@@ -32,11 +35,12 @@ export default defineComponent({
     message: String,
     teams: Array<Team>,
     frozen: Boolean,
+    podium: Array<Rank>,
   },
   data() {
     return {
       mounted: false,
-    }
+    };
   },
   async mounted() {
     this.mounted = true;

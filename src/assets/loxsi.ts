@@ -20,6 +20,12 @@ export type Position = {
   timestamp: number;
 }
 
+export type Rank = {
+  team_id: number;
+  rank: number;
+  rounds: number;
+}
+
 export type SocketHandler = (msg: SocketMsg<any>) => any;
 
 export const socketMsgHandler: Record<string, SocketHandler> = {
@@ -46,4 +52,7 @@ export const socketMsgHandler: Record<string, SocketHandler> = {
   refresh: (msg: SocketMsg<boolean>): boolean => {
     return msg.data;
   },
+  podium: (msg: SocketMsg<Rank[]>): Rank[] => {
+    return msg.data;
+  }
 };

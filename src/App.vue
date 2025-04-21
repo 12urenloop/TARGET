@@ -8,6 +8,7 @@
                :showPoints="showPoints"
                :showTrack="showTrack"
                :frozen="frozen"
+               :podium="podium"
     />
   </main>
 </template>
@@ -16,7 +17,7 @@
 import { defineComponent } from 'vue';
 import TargetComponent from '@/components/TargetComponent.vue';
 import LedWallComponent from '@/components/LedWallComponent.vue';
-import { type Count, type Position, type SocketMsg, socketMsgHandler } from '@/assets/loxsi';
+import { type Count, type Position, type Rank, type SocketMsg, socketMsgHandler } from '@/assets/loxsi';
 import type { Team } from '@/assets/team';
 import RunningTrackComponent from '@/components/RunningTrackComponent.vue';
 
@@ -45,6 +46,7 @@ export default defineComponent({
       message: '',
       teams: [] as Team[],
       frozen: false,
+      podium: [] as Rank[],
     };
   },
   computed: {
@@ -114,6 +116,9 @@ export default defineComponent({
           case 'refresh':
             this.handleNewRefresh(result);
             break;
+          case 'podium':
+            this.handleNewPodium(result);
+            break;
           default:
             console.error(`ERROR: unknown websocket message topic: ${socketMsg.topic}`);
         }
@@ -177,6 +182,9 @@ export default defineComponent({
           location.reload(true);
         }, Math.random() * 10000);
       }
+    },
+    handleNewPodium(podium: Rank[]) {
+      this.podium = podium;
     },
   },
 });
