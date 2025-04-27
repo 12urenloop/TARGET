@@ -84,6 +84,13 @@ export default defineComponent({
           team.speed = Math.max(0, team.speed);
           team.timestamp = now;
 
+          // Failsafe if no data is received for 60 seconds
+          if (team.updatedAt < (now - 60000)) {
+            team.progress = 0;
+            team.speed = 0;
+            team.acceleration = 0;
+          }
+
           if (team.progress >= 1 && team.updatedAt < (now - 5000)) {
             team.rounds += 1;
             team.updatedAt = Date.now();

@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "host": "vite --host",
     "build": "run-p type-check \"build-only {@}\" --",
     "postbuild": "purgecss --css node-modules/mdb-vue-ui-kit/css/*.css --content dist/index.html dist/assets/*.js --output dist/assets",
     "preview": "vite preview",
