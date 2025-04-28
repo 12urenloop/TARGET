@@ -1,15 +1,7 @@
 <template>
   <main>
-    <component :is="currentView"
-               :points="points"
-               :message="message"
-               :teams="teams"
-               :img="img"
-               :showPoints="showPoints"
-               :showTrack="showTrack"
-               :frozen="frozen"
-               :podium="podium"
-    />
+    <component :is="currentView" :points="points" :message="message" :teams="teams" :img="img" :showPoints="showPoints"
+      :showTrack="showTrack" :frozen="frozen" :podium="podium" />
   </main>
 </template>
 
@@ -152,6 +144,7 @@ export default defineComponent({
             show: true,
             updatedAt: Date.now(),
             lastRounds: [0, 0, 0],
+            positions: [],
           });
         }
       }
@@ -160,10 +153,8 @@ export default defineComponent({
       for (const position of positions) {
         const team = this.teams.find((team) => team.team_id === position.team_id);
         if (team) {
-          team.progress = Number.isFinite(position.progress) ? position.progress : 0;
-          team.speed = Number.isFinite(position.speed) ? position.speed : 0;
-          team.acceleration = Number.isFinite(position.acceleration) ? position.acceleration : 0;
-          team.timestamp = position.timestamp;
+          team.positions = team.positions.filter(p => p.timestamp < position.timestamp)
+          team.positions.push(position)
         } else {
           console.error(`ERROR: could not find team with id ${position.team_id} while processing position message`);
         }

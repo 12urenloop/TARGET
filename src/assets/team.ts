@@ -1,3 +1,5 @@
+import type { Position } from "./loxsi";
+
 // Team type
 export interface Team {
   team_id: number;
@@ -12,4 +14,6 @@ export interface Team {
   updatedAt: number;
   // Last 30 rounds
   lastRounds: number[];
+  // Save future positions
+  positions: Position[];
 }

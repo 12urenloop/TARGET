@@ -1,6 +1,6 @@
 {
   "img": "/tracks/12urenloop-opbouw-new.jpg",
-  "wsEndpoint": "wss://loxsi.12urenloop.be/feed",
+  "wsEndpoint": "ws://localhost:8001/feed",
   "showPoints": false,
   "showTrack": false,
   "points": [

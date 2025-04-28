@@ -77,6 +77,14 @@ export default defineComponent({
           // Speed is in percentage of the path per millisecond
           // Acceleration is in percentage of the path per millisecond squared
 
+          if (team.positions[0]?.timestamp ?? now + 1 <= now) {
+            const position = team.positions.shift()!;
+            team.progress = Number.isFinite(position.progress) ? position.progress : 0;
+            team.speed = Number.isFinite(position.speed) ? position.speed : 0;
+            team.acceleration = Number.isFinite(position.acceleration) ? position.acceleration : 0;
+            team.timestamp = Number.isFinite(position.timestamp) ? position.timestamp : 0;
+          }
+
           const dt = now - team.timestamp;
           team.progress += team.speed * dt + 0.5 * team.acceleration * dt * dt;
           team.speed += team.acceleration * dt;
@@ -114,11 +122,13 @@ export default defineComponent({
 <style scoped>
 .img-overlay-wrap {
   position: relative;
-  display: inline-block; /* <= shrinks container to image size */
+  display: inline-block;
+  /* <= shrinks container to image size */
   transition: transform 150ms ease-in-out;
 }
 
-.img-overlay-wrap img { /* <= optional, for responsiveness */
+.img-overlay-wrap img {
+  /* <= optional, for responsiveness */
   display: block;
   max-width: 100%;
   height: auto;
