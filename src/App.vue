@@ -1,15 +1,7 @@
 <template>
   <main>
-    <component :is="currentView"
-               :points="points"
-               :message="message"
-               :teams="teams"
-               :img="img"
-               :showPoints="showPoints"
-               :showTrack="showTrack"
-               :frozen="frozen"
-               :podium="podium"
-    />
+    <component :is="currentView" :points="points" :message="message" :teams="teams" :img="img" :showPoints="showPoints"
+      :showTrack="showTrack" :frozen="frozen" :podium="podium" />
   </main>
 </template>
 
@@ -157,7 +149,13 @@ export default defineComponent({
       }
     },
     handleNewPosition(positions: Position[]) {
+      const now = Date.now();
       for (const position of positions) {
+        // Ignore data older than 60 seconds
+        if (position.timestamp < now - 60000) {
+          continue
+        }
+
         const team = this.teams.find((team) => team.team_id === position.team_id);
         if (team) {
           team.progress = Number.isFinite(position.progress) ? position.progress : 0;
