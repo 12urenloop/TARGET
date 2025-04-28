@@ -1,11 +1,12 @@
 <template>
   <image :id="`rank-${index}-img`"
+         v-if="rank && rank.rank && positions[rank.rank - 1]"
          :href="`/teams/${teams?.find((t: Rank) => t.team_id === rank.team_id)?.team_name.split('-')[0].trim().toLowerCase()}.png`"
-         :x="positions[rank.rank].x - 100 + offset"
-         :y="positions[rank.rank].y - 100"
+         :x="positions[rank.rank - 1].x - 100 + offset"
+         :y="positions[rank.rank - 1].y - 100"
          width="200"
          style="display: block; animation: updown 1s infinite;"
-         :filter="rank.rank === 0 ? 'url(#gold)' : rank.rank === 1 ? 'url(#silver)' : rank.rank === 2 ? 'url(#bronze)' : ''"
+         :filter="rank.rank === 1 ? 'url(#gold)' : rank.rank === 2 ? 'url(#silver)' : rank.rank === 3 ? 'url(#bronze)' : ''"
   />
 </template>
 
