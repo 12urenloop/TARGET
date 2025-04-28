@@ -20,7 +20,7 @@ const routes = {
 };
 type Route = keyof typeof routes;
 
-const CONFIGURATION = '12urenloop-opbouw';
+const CONFIGURATION = '12urenloop-2025';
 
 export default defineComponent({
   name: 'App',
