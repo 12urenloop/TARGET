@@ -4,7 +4,7 @@
          :x="point.x - 50"
          :y="point.y - 50"
          :style="{ display: team.show ? 'block' : 'none' }"
-         :filter="team.team_id === 0 ? 'url(#gold)' : team.team_id === 1 ? 'url(#silver)' : team.team_id === 2 ? 'url(#bronze)' : ''"
+         :filter="rank === 0 ? 'url(#gold)' : rank === 1 ? 'url(#silver)' : rank === 2 ? 'url(#bronze)' : ''"
          width="100"
   />
   <text :id="`team-${team.team_id}-text`"
@@ -24,6 +24,7 @@ export default defineComponent({
   name: 'RunningTeam',
   props: [
     'team',
+    'rank',
   ],
   data() {
     return {

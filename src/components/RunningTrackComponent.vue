@@ -13,11 +13,12 @@
 
       <!-- Points -->
       <template v-if="showPoints">
-        <circle v-for="point of points" :cx="point.x" :cy="point.y" r="10" fill="red" />
+        <circle v-for="(point, index) of points" :key="index" :cx="point.x" :cy="point.y" r="10" fill="red" />
       </template>
 
       <!-- Teams -->
-      <RunningTeam v-for="(team, index) of teams" :key="index" :team="team"></RunningTeam>
+      <RunningTeam v-for="(team, index) of sortedDrawingOrder(teams)" :key="index" :team="team"
+                   :rank="teams?.length ? teams.length - index - 1 : 0"></RunningTeam>
     </svg>
   </div>
 </template>
