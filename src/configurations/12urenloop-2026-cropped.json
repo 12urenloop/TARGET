@@ -1,5 +1,5 @@
 {
-  "img": "/tracks/12urenloop-2026-cropped.jpg",
+  "img": "/tracks/12urenloop-2026-cropped.webp",
   "wsEndpoint": "wss://loxsi.12urenloop.be/feed",
   "showPoints": false,
   "showTrack": false,
