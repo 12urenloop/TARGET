@@ -10,6 +10,6 @@ RUN npm run build
 # RUN #
 #######
 
-FROM nginx:alpine-slim
+FROM docker.io/nginx:alpine-slim
 
 COPY --from=build /app/dist/ /usr/share/nginx/html/

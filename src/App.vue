@@ -20,7 +20,7 @@ const routes = {
 };
 type Route = keyof typeof routes;
 
-const CONFIGURATION = '12urenloop-2026-flipped';
+const CONFIGURATION = '12urenloop-2026-cropped';
 
 export default defineComponent({
   name: 'App',
